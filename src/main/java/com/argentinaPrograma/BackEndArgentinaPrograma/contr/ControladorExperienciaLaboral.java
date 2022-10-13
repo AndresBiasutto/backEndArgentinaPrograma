@@ -66,13 +66,10 @@ public class ControladorExperienciaLaboral {
     
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody ExperienciaLaboralDto dtoexp){
-        //Validamos si existe el ID
         if(!sExperiencia.existsById(id))
             return new ResponseEntity(new Mensaje("El ID no existe"), HttpStatus.BAD_REQUEST);
-        //Compara nombre de experiencias
         if(sExperiencia.existsByNombreE(dtoexp.getEmpresa()) && sExperiencia.getByNombreE(dtoexp.getEmpresa()).get().getId() != id)
             return new ResponseEntity(new Mensaje("Esa experiencia ya existe"), HttpStatus.BAD_REQUEST);
-        //No puede estar vacio
         if(StringUtils.isBlank(dtoexp.getEmpresa()))
             return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         
